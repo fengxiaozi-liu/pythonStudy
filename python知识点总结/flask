@@ -1,0 +1,149 @@
+flask
+
+路由
+	url-->函数
+	endpoint 默认是函数名， 用于反向生成url  用url_for 完成反向生成
+	<int:nid> 传参
+	from werkzug.rounting import BaseConveter
+	自定义正则表达式
+	def init def to_python  def to_url
+
+	其他参数：
+		redirect_to 跳转到一个新的页面继承 在python里面重定向的方法
+			
+			在前端
+				可以在meta头里面重定向
+				或者在js中重定向
+
+		subdomain 子域名
+			获取子域名到底是什么
+			app.config['SAVING_NAME'] = '域名地址'
+			subdomain = "<username>"
+
+
+	重点：
+		url
+		methods
+		endpoint
+		@app.route('index/<int:nid>') 内部执行了将url与函数的对应关系加入到map列表里面
+		url_for 
+
+
+视图
+	cbv views.MethodView
+	fbv
+
+
+
+
+今日内容
+	threading.local
+
+	上下文管理器
+
+	数据库连接池
+
+
+偏函数的作用：自动传参
+装饰器的作用：在不改变原来函数的前提下，在它的前面和后面加入一些功能
+用于session
+flask中的路由，django里面的csrf，缓存，用户登录
+蓝图
+	目录结构
+	路由的分发
+
+
+
+session是什么时候创建的
+	session的创建是在请求进来的时候创建一个RequestContext对象，对request请求和session进行封装经过localstack处理，放到local开辟的一块空间中，在执行open_sessionn的时候会再次处理一次session，在返回请求的时候，执行完视图函数之后会保存一下session，返回给cookie ，然后把local中对应的请求和session删除掉
+
+上下文管理器
+1.将ctx（request，session)封装处理报到local对象里面
+2.视图函数导入
+3.处理请求完毕，
+	获取session并保存cookie
+	将ctx删除
+
+
+今日内容
+	flask-session
+
+	数据库连接池
+		只要用原生的sql就要使用数据库连接池
+
+	wtforms
+		用来做表单验证的
+		生成HTML标签
+		保留上次输入的内容
+
+	SQLAchemy
+		SQLAchemy是基于python实现的orm的一个框架
+		什么是ORM： orm是关系对象映射
+			类 --> 表
+			对象 --->记录（一行数据）
+			当有了对应关系之后不再编写sql语句，取而代之的是操作类和对象
+
+		orm和原生sql哪个好：
+			sql的执行效率高，orm的开发效率高
+
+		db first 根据数据库的表生成类
+			python manage.py inspectdb
+		code first 根据类创建数据库的表
+
+		orm是怎么实现的
+
+
+		使用：
+			SQLAlchemy执行原生的sql语句
+				engine
+
+			使用SQLAlchemy执行orm操作
+
+
+
+
+
+
+
+	flask-script
+
+	flask-migrate
+
+
+面试题：
+	谈谈django和flask
+		django是一个大而全的框架，有很多组件
+		flask是一个短小精悍的框架，可宽展性强
+		相同点：都是基于wsgi来做的
+		不同点，django是采用参数的形式处理请求数据的
+			   flask是采用上下文管理器的形式来做的，flask上下文管理器还是挺有意思的
+		上下文管理机制
+			等到请求到来的时候会进行三步，将ctx封装到local对象中
+			视图函数导入
+			请求完毕
+
+	local的作用
+		用于保存请求上下文对象和app上下文对象，并且可以做到线程数据隔离
+	localstack
+		将local中保存的数据维护成一个栈
+
+	5.flask内置的功能
+		配置
+		视图
+		路由
+		session
+		闪现
+		装饰器
+		中间件
+		蓝图
+
+	6.flask第三方组件
+		flask-session  只属于flask，用于把session保存在redis数据库中
+			from redis import Redis
+			app.config['']
+		DBUtils
+			创建数据库的连接池
+			两种模式
+		wtforms
+			用于做表单验证
+

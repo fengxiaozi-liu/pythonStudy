@@ -1,0 +1,129 @@
+启动mysql
+	启动服务端
+		sudo systemctl start mysqld
+	启动客户端
+		1.sudo cta /var/log/mysqld.log|grep password 查看临时密码
+		2.sudo mysql -u用户名 -p 执行输入密码命令
+		3.alter user '用户名'@'主机' identified with mysql_native_password by '你的密码'
+			改变临时密码为你的专属密码，因为临时密码不能操作数据库
+
+
+数据库对用户的操作
+	创建新的用户
+		grant all privileges on *.* to '用户名'@'主机' identified by '密码' with option 
+			给一个用户授予全部权限
+		flush privileges 刷新用户权限
+
+	更改密码的两种方式
+		alter user '用户名'@'主机' identified with mysql_native_password by '你的密码'
+		update user set authentication_string-password('你的密码') where user='用户名'
+
+	查看相关的权限
+		show grants 查看当前用户的权限
+		show grants for '用户名'@'主机' 查询指定的用户权限
+	回收权限
+		revoke all privileges on *.* from '用户名'@'主机' 回收用户的所有权限
+	删除用户
+		drop '用户名'@'主机' 删除指定的用户
+
+mysql对数据库的操作
+	创建数据库
+		create database data_name charset=utf8mb4
+	查看数据库
+		show databases
+	使用指定的数据库
+		use data_name 
+	删除数据库
+		drop database data_name
+
+mysql对表的操作
+	创建表
+		create tabel student(
+			id int primary key auto_increment,
+			name varchar(16),
+			gender enum('男','女')，
+		)charset=utf8;
+	删除表
+		drop table table_name
+	查看表格
+		show tables 查看所有的表
+		desc 查看表中的具体数据
+	修改表格
+		alter table old_table_name rename new_table_name  修改表格的名字
+		alter table old_table_name rename 数据库.表名 将一张表移动到指定的数据库并取一个新名字
+
+mysql对表中字段的操作
+	增加字段
+		alter table table_name add 字段名 数据类型.属性
+		alter talbe table_name add 字段名 数据类型.属性 first 把字段名放在第一位
+		alter table table_name add 字段名 数据类型.属性 after 字段名 把字段名放在某一字段的后面
+	修改字段
+		alter table table_name modify 字段名 数据类型.属性 修改字段的属性
+		alter table table_name change 字段名 字段名 数据类型.属性 修改字段的名字
+		alter table table_name change 旧字段名 新字段名 数据类型.属性 after 字段名
+	删除字段
+		alter table table_name drop 字段名 删除某一个字段
+
+字段中的数据类型
+	int    	整型
+	bigint  
+	tinyint
+	float   浮点型
+	char 	字符串类型
+	varchar
+	enum	枚举类型
+	set 	集合类型
+	datetime 时间日期类型
+	desc table_name 查看指定表中的字段
+
+表中数据的操作
+	插入数据
+		insert into table_name(字段，字段) values(数据,数据)
+	删除表中的数据
+		delete from table_name where  条件
+	修改表中的数据
+		update table_name set 字段=数据 where 条件
+
+	查询表中的数据
+		查询数据中的关键字
+			where  having  条件判断的关键字，having可以跟聚合函数，但是不能判断前面没有出现的字段
+			from 从哪一张表中取数据
+			as   给指定的字段或者是表取别名
+			group by 字段 按照某个字段进行分组
+			order by asc/desc  按照某一字段进行排序，asc表示正序排列，desc表示倒叙排列
+			distinct 去重 对具有相同数据的字段进行去重操作
+		查询中的聚合函数
+			group_concat()
+			count()
+			max()
+			min()
+			sum()
+			avg()
+		单表查询的操作
+			select * from student 从学生表中拿取全部数据
+			select id,name from student oder by id 
+			select id,group_concat(name) group by id order by id;
+		联表查询
+			inner join on /left join on/right join on
+			select *,class_id from student inner join on studnet.cls_id = class.id order by studnet.id
+
+	视图表
+		创建一个视图表
+			create view view_name as 别名
+		查询视图表
+			select * from view_name
+		删除视图表
+			drop view view_name
+
+python连接数据库的操作
+	import pymysql
+	conn = pymysql.connect(host='',port=,user=,password=,charset=utf8,database=,)
+		创建与数据库的链接
+	cursor = conn.cursor(pymysql.Cursors.dictcursor) 创建一个游标
+	cursor.execute('函数操作'，[])
+	data = cursor.fetchall()/fetchone()
+	coon.commit()
+	cursor.close()
+	conn.close()
+
+

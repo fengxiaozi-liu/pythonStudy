@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./jquery-1.12.4.min.js"></script>
+    <script>
+<!--        // 向web服务器发送ajax请求，本质上是http请求-->
+<!--        // $.ajax({-->
+<!--        //     // 请求的资源地址，不指定ip地址和端口号，表示请求的是自己的服务器资源数据-->
+<!--        //     url:"./data.json",-->
+<!--        //     // 请求方式 get或者post-->
+<!--        //     type:"get",-->
+<!--        //     // 指定以什么方式解析服务器返回的数据，这里用json解析服务器返回的数据-->
+<!--        //     dataType:"JSON",-->
+<!--        //     // data:表示发送给web服务器的参数-->
+<!--        //     success:function(data){-->
+<!--        //         console.log(data.name);-->
+<!--        //         // 数据请求回来以后可以绑定给html某个标签控件，实现局部刷新-->
+<!--        //     },-->
+<!--        //     // 请求失败执行的函数-->
+<!--        //     error:function(){-->
+<!--        //         console.log("请求执行失败");-->
+<!--        //     },-->
+<!--        //     // 是否使用异步，默认不指定表示是异步请求-->
+<!--        //     async:true,-->
+<!--        // });-->
+<!--        // 发送get方式的ajax请求简写方式-->
+<!--        // 1.请求地址-->
+<!--        // 2.请求传给web服务器的参数-->
+<!--        // 3.请求成功的回调函数-->
+<!--        // 4.返回数据的解析方式-->
+<!--        $.get("data.json",{"name":"zhangsan"},function(data){-->
+<!--            // 如果按照json格式进行解析，js就能JavaScript的对象-->
+<!--            console.log(data.name)-->
+<!--        },"JSON").error(function(){-->
+<!--            alert("请求异常");-->
+<!--        });-->
+<!--        // 以post的方式传递请求-->
+        $.post("data.json",{"name":"zhangsan"},function(data){
+<!--            // 如果按照json格式进行解析，js就能JavaScript的对象-->
+            alert(data.name)
+        },"JSON").error(function(){
+            alert("请求异常");
+        });
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
